@@ -4,11 +4,16 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Task as TaskModel;
+use Livewire\WithPagination;
 
 class Task extends Component
 {
+    use WithPagination;
+
     public $tasks;
     public TaskModel $task;
+
+    protected $paginationTheme = 'bootstrap';
 
     protected $rules = ['task.text' => 'required|max:40'];
 
@@ -49,7 +54,7 @@ class Task extends Component
     {
         $taskToDelete = TaskModel::find($id);
 
-        if(!is_null($taskToDelete)) {
+        if (!is_null($taskToDelete)) {
             $taskToDelete->delete();
             $this->emitUp('taskSaved', 'Tarea eliminada correctamente!');
             $this->mount();
@@ -58,6 +63,7 @@ class Task extends Component
 
     public function render()
     {
-        return view('livewire.task');
+
+        return view('livewire.task', ['tasks' => TaskModel::paginate(10)]);
     }
 }

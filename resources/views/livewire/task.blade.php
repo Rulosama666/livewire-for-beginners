@@ -28,6 +28,8 @@
             @empty
                 <h3>No existen tareas para mostrar.</h3>
             @endforelse
+            {{-- {{ $tasks->links() }} --}}
         </tbody>
     </table>
+
 </div>
